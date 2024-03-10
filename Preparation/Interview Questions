@@ -1,0 +1,1039 @@
+Write a java program to count the chacters of an string
+=======================================================
+
+public class CharacterCountInString {
+
+	public static void main(String[] args) {
+		String countString = "Balaji";
+		int count = 0;
+
+		//Use String.length() to Count Total Characters in a Java String
+		System.out.println("String total count "+ countString.length());
+
+
+		//Use Loop and charAt() to Count a Specific Character in a Java String
+		for (int i = 0; i < countString.length(); i++) {
+			count++;
+			System.out.println("character " + countString.charAt(i)+" count "+count);
+		}
+
+		//Use Java 8 Stream to Count Characters in a Java String
+		long totalCharacters = countString.chars().filter(ch -> ch != ' ').count();
+		System.out.println("Count using Streams API " +totalCharacters);
+
+
+	}
+}
+
+purpose of servlet filter
+========================
+Filter is an Java Object used to preprocessing of an request and postProcessing of an respone before they reach to the target resouce in web allication.
+
+
+Access Modifiers
+================
+
+Access Modifiers specifies the accessbility or scope of the field, method, constructor and class.
+
+There are 4 types of access modifiers in Java
+  Public ---> throught the applications
+  Private ---> with in the class
+  protected ---> with in the package and outside package through child class
+  default ---> with in the package.
+
+
+@RequestBody
+============
+
+@RequestBody annoation is usedd to indicating a method paramert should be bind to the body of the HTTP request.
+
+Internally, this annotation uses HTTP Message converters to convert the body of HTTP requests to domain objects.
+
+{ "firstName" : "Elmer", "lastName" : "Fudd" }
+Assume that we are sending this JSON in the request body, now inside the controller, we can bind this JSON data to a domain object.
+
+@PostMapping("/users")
+public void printData(@RequestBody User user) {
+}
+
+Now this will happen with the help of Jackson API which is present in the classpath.
+Spring would convert the incoming JSON to a User object from the request body (because we added the @RequestBody annotation)
+
+
+@ResponseBody
+=============
+
+This annoation tells a controller that the object returned  is automatically serialized into JSon and passed back into the HttpResponse object.
+
+When we use @ResponseBody annotation on method then Spring will convert the returned value and writed it  to HttpResponse object.
+
+
+@ControllerAdvise
+=================
+
+@ControllerAdvise and @ExceptionHandler annotations are used to handle exception globally in SpringBoot.
+(@InitBinder and @ModalAttribute can also be used with @ControllerAdvice).
+
+By default, @ControllerAdvice will apply to all classes which are annotated with @Controller annotation.
+If you wanted this to be more specific, there are few properties provided.
+
+If you provide the pakage name then this will enable for all the classe within that package.
+
+@ControllerAdvice("my.chosen.package")
+@ControllerAdvice(value = "my.chosen.package")
+@ControllerAdvice(basePackages = "my.chosen.package")
+
+
+ClassLoader in JAVA
+===================
+A class loader is an object that is responsible for loading classes into Java Virtual Machine(JVM).
+
+Types of ClassLoaders
+---------------------
+  1. BootStrap ClassLoader   ---> Bootstrap ClassLoader loads classes from the location rt.jar
+	2. Extension ClassLoader   ---> It will load classes from jre/lib/ext  directory or any other directory pointed by the system property java.ext.dirs.
+	                                This loader is child class of BootStrap ClassLoader
+	3. System ClassLoader      ---> It will load all the classes from class path and this is a child class of Extension ClassLoader.
+
+
+
+JSP Implicit Objects
+====================
+
+9 implicit objects are available in JSP. These objects are created by the web container that are available to all the jsp pages.
+
+ Object          	Type
+ -------          ----
+  out	            JspWriter
+  request	        HttpServletRequest
+  response	      HttpServletResponse
+  config	        ServletConfig
+  application	    ServletContext
+  session	        HttpSession
+  pageContext	    PageContext
+  page	          Object
+  exception	      Throwable
+
+
+  out
+  ---
+  This object is used to write a data to buffer. It is the object of JspWriter.
+
+  <body>
+    <% out.print("Today is:"+java.util.Calendar.getInstance().getTime()); %>
+  </body>
+
+  request
+  -------
+  request implict objects are used to get the request information sucha as parameters, header information, server name, server port and content type.
+  It can also be used to set, get and remove attributes from the jsp request scope.
+
+  <%
+     String name=request.getParameter("uname");
+     out.print("welcome "+name);
+  %>
+
+  response
+  --------
+  This object is used to add or manipulate the response such as redirect response to another resource, send errors etc.
+
+  <%
+    response.sendRedirect("http://www.google.com");
+  %>
+
+  config
+  ------
+  It is used to get the initialization parameters from web.xml file.
+
+  <%
+     String driver=config.getInitParameter("dname");
+     out.print("driver name is="+driver);
+  %>
+
+  session
+  -------
+  It is used to set, get or remove attributes from the session and also used to get the session information.
+
+  <%
+     session.setAttribute("user",name);
+     String name=(String)session.getAttribute("user");
+  %>
+
+  pageContext
+  -----------
+  It is used to set, get or remove attributes from one of the following below scopes.
+
+  page
+  request
+  session
+  application
+
+  In JSP, page scope is the default scope.
+
+  <%
+     pageContext.setAttribute("user",name,PageContext.SESSION_SCOPE);
+     String name=(String)pageContext.getAttribute("user",PageContext.SESSION_SCOPE);
+  %>
+
+
+Jsp Scopes
+==========
+
+ Page ---> Objects can be accessed only within the JSP page
+ request ---> Objects can be accessed within all the pages that serve the current request
+ Session ---> Objects can only be accessed within the JSP pages accessed within the session.
+ application ---> Application scope objects can be accessed by all JSP pages in a given context.
+
+
+ equals() Vs == in Java
+ ======================
+
+ Both are used to compare two objects in Java.
+
+ Whenever we create an object in Java using new operator then it will create a new memory location for that object.
+ So, we use == operator to check the address or memory location of two object are same or not.
+
+ == [Reference comparison]
+ euals() [Content Comparison]
+
+ == operator compares the reference or memory location of an object in heap, whether they point to same location or not.
+
+ equals() method compares the contents of an objects.
+
+
+
+ Static in Java
+ ==============
+ Static is a Java keyword is used for memory management mainly.
+
+ We can access the static data with out creating an object of the class but only can access with in static area only.
+
+ We can apply static keyword for,
+    1. variable
+		-----------
+			 The static variable can be used to refer the common property of all objects (which is not unique for each object).
+			 The static variable gets memory only once at the time of class loading.
+
+		2. methods
+		----------
+		   static method belongs to the class rather than the object of a class.
+       static method can be invoked without the need for creating an instance of a class.
+       static method can access static data member and can change the value of it.
+
+		3. Block
+		--------
+		    Is used to initialize the static data member.
+        It is executed before the main method at the time of classloading.
+
+
+	Object class in Java
+	====================
+	Object class is the super class of all classes in Java.
+
+	  Methods in Object class
+	  -----------------------
+		  toString()  --> toString() provides a String representation of an object and is used to convert an object to String.
+
+			hashCode()  --> This function returns the hash value of an object, that hash value is used to search objects in collections.
+			                JVM(Java Virtual Machine) uses the hashCode method while saving objects into hashing-related data structures like
+										  HashSet, HashMap, Hashtable, etc.
+
+			equals()    --> This method compares the given object to this object.
+
+			clone()     --> Creates and returns the exact copy (clone) of this object.
+
+			notify()    --> wakes up single thread, which is waiting on this object's monitor.
+
+			notifyAll() --> wakes up all the threads, which are waiting on this object's monitor.
+
+			wait()      --> this method stops the current thread execution until another thread invokes  notify() or notifyAll() methods
+	                    for this object.
+
+			finalize() --> This method invoked by the garbage collector before that object is garbage collected.
+
+
+	Scopes in Spring
+	================
+	 1. Singleton
+	 2. ProtoType
+	 3. requests
+	 4. Session
+	 5. global-Session
+
+	String Vs StringBuffer Vs StringBuilder
+	=======================================
+
+	   String is immutable whereas StringBuffer and StringBuilder are mutable classes.
+		 Immutable means unmodifiable or unchangeable[Once String object is created its data or state can't be changed but a new String object is created]
+
+	   String        --> String is a Java class, whenever we do String manipulation like concatenation, substring, etc.
+		                   It generates a new String and discards the older String for garbage collection.
+
+	   StringBuffer  --> StringBuffer is a Java class and all the methods in this class are synchronized. So, this is thread safe.
+		                   Two threads can't call the methods of StringBuffer simultaneously.
+
+		 StringBuilder --> StringBUilder is a Java class and all the methods in this class are non synchronized. So, this is not thread safe.
+
+
+	ClassNotFoundException vs NoClassDefFoundError
+	==============================================
+
+	ClassNotFoundException occurs when you try to load a class at runtime using Class.forName() or loadClass() methods and requested classes are not found in class path.
+	Most of the time this exception will occur when you try to run an application without updating the classpath with JAR files.
+
+	NoClassDefFoundError occurs when the class was present during compile time and the program was compiled and linked successfully but the class was not present during runtime.
+
+
+	ClassNotFoundException occurs when class path does not get updated with required JAR files while NoClassDefFoundError occurs when the required class definition
+	is not present at runtime.
+
+
+	Super
+	=====
+	super is a java keyword used to refer the parent class object.
+
+	super keyword can be used to refer
+	   parent class instance variable
+		 parent class Methods
+		 parent class constructors.
+
+
+ this
+ ====
+
+
+ Inner join Vs Outer join
+ ========================
+
+ inner joins result in the intersection of two tables, whereas outer joins result in the union of two tables.
+
+
+Custom Exceptions
+=================
+
+throw new IllegalArgumentException("Invalid shop type specified");
+throw new RuntimeException("Some Mandatory fields are blank or empty");
+/throwing the below excption since that provide is too long than expected.
+throw new Exception("CCC Estimate id is too long")
+throw new UnsupportedException("Not implemented in Procurement");
+
+
+
+Marker Interface in java
+========================
+Marker interface is an interface that has no methods or constants inside it.
+It provides run-time type information about objects, so the compiler and JVM have additional information about the object.
+A marker interface is also called a tagging interface.
+
+Examples of marker interface are Serializable, Cloneable and Remote interface. All these interfaces are empty interfaces.
+
+Cloneable interface --> Cloneable interface is present in java.lang package. A class that implements the Cloneable interface indicates that it is legal for clone().
+
+Serializable interface--> Serializable interface is present in java.io package. It is used to make an object eligible for Serialized or Deserialized.
+
+Remote interface --> Remote interface is present in java.rmi package. It is used to make an object a remote object.
+                     A remote object is an object which is stored at one machine and accessed from another machine.
+
+
+
+Serialization and Deserialization
+=================================
+
+Serialization is a mechanism of converting the state of an object into a byte stream.
+Deserialization is the reverse process where the byte stream is converting into actual Java object in memory. This mechanism is used to persist the object.
+
+
+
+Interface Vs Abstract class
+===========================
+
+Both abstract class and interface are used for abstraction in Java.
+
+
+Interface --> The interface is a blueprint that can be used to implement a class, Interface can't be instantiated.
+              It contains only abstract methods(methods without code) and by default all methods are public and abstract.
+							Interfaces never contain instance variables but, they can contain public static final variables (i.e., constant class variables).
+
+Abstract class --> A class which has the abstract keyword in its declaration is called abstract class and it can't be instantiated.
+                   Abstract classes should have at least one abstract method. , i.e., methods without a body. It can have multiple concrete methods(methods that have code).\
+
+An interface can extend one or more interfaces, an abstract class can extend another Java class and implement multiple Java interfaces.
+
+
+
+how can we change the default scope of spring bean from singleton to ProtoType.
+===============================================================================
+@Bean
+@Scope("prototype")
+public Person personPrototype() {
+    return new Person();
+}
+
+<bean id="personPrototype" class="org.baeldung.scopes.Person" scope="prototype"/>
+
+
+
+configure datasource for Spring boot batch
+==========================================
+
+1. Add spring batch dependencies in pom.xml
+      <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-batch</artifactId>
+      </dependency>
+
+2. Provide data source information in application.properties files
+       spring.datasource.url = [url]
+       spring.datasource.username = [username]
+       spring.datasource.password = [password]
+       spring.datasource.driverClassName = oracle.jdbc.OracleDriver
+
+3. Create batch configuration file then that class should extends from DefaultBatchConfigurer and override setDataSource method.
+       @Configuration
+      public class ApplicationConfiguration extends DefaultBatchConfigurer {
+          @Override
+          public void setDataSource(DataSource dataSource) {
+               super.setDataSource(null);
+          }
+			}
+
+			So, when we start the application, Spring Boot will automatically get the datasource details from application.propeties file and injects into DataSource .
+
+     To enable the batch operations for your application We need to add the @EnableBatchProcessing annotation in the configuration class file.
+     The reader() method is used to read the data from the CSV file and writer() method is used to write a data into the SQL.
+
+
+
+Job and Step in Spring batch
+============================
+
+Job --> Jobs that can run without end user interaction, or can be scheduled to run as resources permit, are called batch jobs.
+
+Step --> Step is a specific phase of a batch Job. A job can have more than one step.
+         And every step follows the sequence of reading data, processing it and writing it.
+
+
+
+components in Spring Batch(Item Writer etc).
+
+hoe can we access API from our application.
+
+
+
+Association Vs Aggregation Vs Composition
+=========================================
+
+Association
+-----------
+Association is a relation between two separate classes which establishes through their Objects.
+Association can be one-to-one, one-to-many, many-to-one, many-to-many.
+In Object-Oriented programming, an Object communicates to another object to use functionality and services provided by that object.
+Aggregation and Composition are the two forms of association.
+
+Aggregation
+-----------
+Aggregation is a special form of Association and it represents the Has-A relationship.
+It is a unidirectional association i.e. a one-way relationship.
+In Aggregation, both objects are independent of each other and can exist even if the parent object gets deleted.
+
+Composition
+-----------
+Composition represents Has-A relationship.
+In composition, two entities are highly dependent on each other.
+When there is a composition between two entities, the composed object cannot exist without the other entity.
+
+
+Spring Bean LifeCycle
+=====================
+
+Bean life cycle is managed by the spring container. When we run the program then, first of all, the spring container gets started.
+After that, the container creates the instance of a bean as per the request, and then dependencies are injected.
+And finally, the bean is destroyed when the spring container is closed.
+
+Therefore, if we want to execute some code on the bean instantiation and just after closing the spring container,
+then we can write that code inside the custom init() method and the destroy() method.
+
+
+@RequestParam and @PathVariable can both be used to extract values from the request URI, but they are a bit different.
+
+@RequestMapping --> @RequestMapping Annotation which is used to map HTTP requests to handler methods of MVC and REST controllers.
+
+@RequestParam --> This annotation used for accessing the query parameter values from the http request. Look at the following request URL:
+                   http://localhost:8080/springmvc/hello/101?param1=10&param2=20
+
+@PathParam    --> This annotation is used to extract values from the URI path.
+
+
+Autoboxing and Unboxing in JAVA
+===============================
+
+Autoboxing is the process of converting the primitive value into an object of its related wrapper classes.
+
+   Ex: int ---> Integer
+
+Unboxing is this process of converting an object of wrapper type to its corresponding primitive value.
+
+   Ex : Integer --> int
+
+   // Creating  Arraylist of WrapperClass(Integer) type
+	 ArrayList<Integer> al = new ArrayList<Integer>();
+
+			 // Adding int primitives type values to the list
+			 // Autoboxing
+			 al.add(1);
+			 al.add(2);
+			 al.add(24);
+
+	In the above example, we have created a list of elements of the Integer type.
+	We are adding int primitive type values instead of Integer Object and the code is successfully compiled.
+	It does not generate a compile-time error as the Java compiler creates an Integer wrapper Object from primitive int i and adds it to the list.
+
+
+What is Transaction
+===================
+	Transaction is a unit of work or series of actions that must all complete successfully.
+	Hence, if one or more action fails, all other actions must back out leaving the state of the application unchanged.
+	Which are used to perform specific operations such as insert, update and delete data in DB.
+
+	Spring Framework provides 3 ways of managing transactions, they area
+	1. Programmatically
+	2 .Declaratively
+	3. Through AOP(Aspect Oriented Programming)
+
+	There are two types of transactions
+	 1. Local transactions
+	 2. Global transactions(Distributed transactions)
+
+
+ What is transient
+ =================
+
+	 transient is a java keyword, which is used to exclude the value of an object from serialization process
+	 and that value will not persist in database.
+
+
+ Memory types in JVM
+ ===================
+ The memory in the JVM is divided into five different parts,
+
+ 1. Method Area -->
+
+ 2. Heap -->
+
+ 3. Stack -->
+
+ 4. PC Registers -->
+
+ 5. Native Method Stacks -->
+
+
+What is the use of default Method
+=================================
+
+Default methods are methods that can have a body in interfaces.
+The most important use of default methods in interfaces is to provide additional functionality without breaking down the implementing classes.
+
+Default methods allow the interfaces to have methods with implementation without affecting the classes which are implementing this interface.
+
+The default methods were introduced to provide backward compatibility so that existing interfaces can use the lambda expressions without implementing
+the methods in the implementation class.
+
+
+
+Synchronized vs Volatile
+========================
+ Volatile keyword is used to make classes thread safe.
+ It means that multiple threads can use a method and instance of the classes at the same time without any problem.
+ Volatile is applicable to variables only..
+
+ LinkedList Vs Arraylist
+ =======================
+ 1. ArrayList internally uses a dynamic array to store the elements.
+    LinkedList internally uses a doubly linked list to store the elements.
+
+ 2. ArrayList is better for storing and accessing data.
+    LinkedList is better for manipulating data.
+
+
+ When would you use a LinkedList vs ArrayList
+ ============================================
+ LinkedList should be used where modifications to a collection are frequent like addition/deletion operations.
+ Because it uses a doubly linked list, so no bit shifting is required in memory. LinkedList is much faster as compare to ArrayList in such cases.
+
+ In case of read-only collections or collections which are rarely modified, ArrayList is suitable.
+
+
+ Vectors
+ =======
+ Vector is similar to ArrayList but the differences are, it is synchronized and its default initial size is 10.
+ ArrayList is faster. Since it is non-synchronized, while vector operations give slower performance since they are synchronized.
+
+
+
+ @Qualifier
+ ==========
+ @Qualifier annotation is used to resolve the autowiring conflict, when there are multiple beans of same type.
+ The @Qualifier annotation can be used on any class annotated with @Component or on methods annotated with @Bean .
+
+
+ @RestController Vs @Controller
+ ==============================
+ @Controller is used to mark classes as Spring MVC Controller.
+ @RestController annotation is a special controller used in RESTful Web services.
+
+ In @Controller, we need to use @ResponseBody on every handler method.
+ In @RestController, we don’t need to use @ResponseBody on every handler method.
+
+ @RestController annotation indicates that class is a controller where @RequestMapping methods assume @ResponseBody semantics by default.
+
+ The main difference is  @RestController is combination of @Controller and @ResponseBody annotation.
+
+
+Primarkey vs Uniquekey
+======================
+ A primary key is a column of table which uniquely identifies each row in that table.
+
+ Primary key will not accept NULL values whereas Unique key can accept NULL values.
+
+ A table can have only one primary key column whereas unique key can have multiple unique key columns on a table.
+
+
+@PathVariable Vs @PathParam
+===========================
+@PathVariable and @PathParam both are used for accessing parameters from URI Template.
+
+@PathVariable is from spring and @PathParam is from JAX-RS.
+
+@PathParam can use with REST only, where @PathVariable used in Spring so it works in MVC and REST.
+
+
+Functional Interface
+====================
+ An Interface that contains exactly one abstract method is known as functional interface.
+ It can have any number of default, static methods but can contain only one abstract method.
+ It can also declare methods of object class.
+
+ Functional Interface is also known as Single Abstract Method Interfaces or SAM Interfaces.
+
+ The main advantage of functional interface is we can pass a functional interface as an argument to another method
+ and we can provide an implementation for these interfaces using lambda expressions.
+
+  Syntax
+	======
+	@FunctionalInterface
+  interface interface_name {
+    // only one abstarct method declaration
+  }
+
+
+Java Predefined-Functional Interfaces
+=====================================
+ LongBinaryOperator
+ LongConsumer
+ LongSupplier
+ IntConsumer
+ IntSupplier
+
+
+ Can a functional interface extend/inherit another interface
+ ===========================================================
+
+ A functional interface cannot extend another interface with abstract methods as it will void the rule of one abstract method per functional interface.
+
+ Ex:
+    interface Parent {
+      public int parentMethod();
+    }
+    @FunctionalInterface // This cannot be FunctionalInterface
+      interface Child extends Parent {
+      // It will also extend the abstract method of the Parent Interface
+      // Hence it will have more than one abstract method and will give a compiler error
+    }
+
+ It can extend other interfaces which do not have any abstract method and only have the default, static methods.
+
+   Ex:
+	     interface Parent {
+           public default void parentMethod(){
+              System.out.println("Hello");
+           }
+       }
+       @FunctionalInterface
+       interface Child extends Parent {
+          public int childMethod();
+       }
+
+
+Why functional interface should contain only one abstract methods
+=================================================================
+Since a lambda function can provide the implementation for only one method, So it is mandatory for the functional interface to have ONLY one abstract method.
+
+
+
+Application Server vs Web server
+================================
+
+
+Composite key
+============
+
+Exception Hierarchy
+===================
+
+
+
+
+Optional class
+==============
+Optional.ofNullable() method of the Optional class, returns a Non-empty Optional if the given object has a value, otherwise it returns an empty Optional.
+We can check whether the returned Optional value is empty or non-empty using the isPresent() method.
+
+
+
+Comparable vs Comparator
+========================
+Comparable and Comparator both are interfaces and can be used to sort collection elements.
+
+Comparable provides compareTo() method to sort elements.
+Comparator provides compare() method to sort elements.
+
+Comparable provides a single sorting sequence. In other words, we can sort the collection on the basis of a single element such as id, name, and price.
+Comparator provides multiple sorting sequences. In other words, we can sort the collection on the basis of multiple elements such as id, name, and price etc.
+
+Comparable is present in java.lang package.
+Comparator is present in the java.util package.
+
+We can sort the list elements of Comparable type by Collections.sort(List) method.
+We can sort the list elements of Comparator type by Collections.sort(List, Comparator) method.
+
+
+Actuator in Spring Boot
+=======================
+Spring Boot Actuator is a sub-project of the Spring Boot Framework.
+It includes a number of additional features that help us to monitor and manage the Spring Boot application.
+It contains the actuator endpoints (the place where the resources live).
+We can use HTTP and JMX endpoints to manage and monitor the Spring Boot application.
+
+It uses HTTP endpoints to expose operational information about any running application.
+
+Advantages of Monitoring/Managing the Application
+-------------------------------------------------
+ It increases customer satisfaction.
+ It reduces downtime.
+ It boosts productivity.
+ It improves Cybersecurity Management.
+ It increases the conversion rate.
+
+
+Default size of ArayList, HashSet and HashMap
+==============================================
+
+ArrayList -- 10
+HashSet & HashMap -- 16
+
+
+
+Solid Principles
+================
+ The word SOLID acronym for:
+
+ 1. Single Responsibility Principle (SRP) -- Every Java class must perform a single functionality
+
+ 2. Open-Closed Principle (OCP) -- The module should be open for extension but closed for modification.
+
+ 3. Liskov Substitution Principle (LSP) -- Derived classes must be completely substitutable for their base classes.
+
+ 4. Interface Segregation Principle (ISP) -- The principle states that the larger interfaces split into smaller ones.
+																						 Because the implementation classes use only the methods that are required.
+																						 We should not force the client to use the methods that they do not want to use.
+
+ 5. Dependency Inversion Principle (DIP) -- The principle states that we must use abstraction (abstract classes and interfaces) instead of concrete implementations
+
+
+
+Stream API
+==========
+
+Java Streams is one of the feature in Java, introduced in JAVA 8
+We can use streams to filter, collect, print, and convert from one data structure to other etc.
+
+A Stream supports several operations and these operations are divided into intermediate and terminal operations.
+Intermediate operation are lazy while a terminal operations are not.
+When you invoke an intermediate operation on a stream, that operation will not execute immediately. It will execute only when a terminal operation is invoked on that stream.
+
+ Intermediate Operations
+ -----------------------
+  filter(Predicate<T>) -- filter method is used to select elements as per the Predicate passed as argument.
+  map(Function<T>) --
+  sorted(Comparator<T>) -- sorted method is used to sort the stream.
+  distinct()
+	limit()
+
+	Terminal Operations
+	-------------------
+	 forEach() -- forEach method is used to iterate through every element of the stream.
+	 collect()   -- The collect method is used to return the result of the intermediate operations performed on the stream.
+	 count()     --
+	 reduce()    -- The reduce method is used to reduce the elements of a stream to a single value.
+	 min()
+	 max()
+
+
+HashMap Internal flow
+=====================
+
+
+
+
+truncate vs delete
+==================
+The delete statement is used to remove single or multiple records from an existing table depending on the specified condition.
+
+  Syntax: DELETE FROM table_name WHERE condition;
+
+The truncate command removes the complete data from an existing table without removing the table structure.
+
+   Syntax: TRUNCATE TABLE table_name;
+
+
+
+
+HashSet Vs TreeSet
+==================
+
+ Hash set is implemented using HashTable.
+ The tree set is implemented using a tree structure.
+
+ HashSet allows a null object.
+ Tree set does not allow the null object. It throws the null pointer exception.
+
+ Hash set use equals method to compare two objects.
+ Tree set use compare method for comparing two objects.
+
+ HashSet does not maintain any order.
+ TreeSet maintains an object in sorted order.
+
+
+
+ join() vs yield() vs sleep()
+ ============================
+ yield() method pauses the currently executing thread temporarily for giving a chance to the remaining waiting threads of the same priority or higher priority to execute.
+ If there is no waiting thread or all the waiting threads have a lower priority then the same thread will continue its execution.
+
+
+join() If any executing thread t1 calls join() on t2 (i.e. t2.join()) immediately t1 will enter into waiting state until t2 completes its execution.
+
+sleep() Based on our requirement we can make a thread to be in sleeping state for a specified period of time.
+
+
+Ways to create a Java object
+============================
+
+ 1. Using new keyword
+ 2. Using new instance
+ 3. Using clone() method
+ 4. Using deserialization -- Whenever we serialize and then deserialize an object, JVM creates a separate object.
+ 5. Using newInstance() method of Constructor class
+
+
+Prevent Singleton Pattern From Cloning
+======================================
+we need to implement/override the clone() method and throw CloneNotSupportedException from the clone method.
+If anyone tries to create a clone object of Singleton, it will throw an exception.
+
+	Syntax:
+	       @Override
+         protected Object clone() throws CloneNotSupportedException  {
+	           throw new CloneNotSupportedException();
+         }
+
+@Service vs @Repository
+=======================
+
+How to deal with "java.lang.OutOfMemoryError: Java heap space" error
+====================================================================
+An easy way to solve OutOfMemoryError in java is to increase the maximum heap size by using JVM options "-Xmx512M", this will immediately solve your OutOfMemoryError.
+
+
+what is indexing in Data base
+=============================
+Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+It is a data structure technique which is used to quickly locate and access the data in a database.
+
+
+Data base queries
+=================
+
+  Highest Salary
+	--------------
+	    select *from employee where salary=(select Max(salary) from employee);
+
+	Second Highest salary
+	---------------------
+	    select max(salary) as salary from employee where salary <>(select Max(salary) from employee);
+
+	3rd highest Salary
+	------------------
+	    select max(salary) as Salary from employee where salary < (select max(salary) from employee where
+			                                                            < (select max(salary) from employee));
+
+
+
+Disable Auto-configuration classes in Spring BootStrap
+======================================================
+We can use the exclude attribute of @EnableAutoConfiguration annotation to disable the auto-configuration classes.
+
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+public class MyConfiguration
+{
+}
+
+
+How to see all the Spring beans that are loaded - Spring Boot
+=============================================================
+In Spring Boot, you can use appContext. getBeanDefinitionNames() to get all the beans loaded by the Spring container.
+And another way is using Actuator.
+
+
+
+springBoot Vs Spring
+====================
+
+Spring Boot is built on top of Spring framework, So, Spring Boot has all the functionalities of Standard Spring framework.
+Spring Boot provides a rapid enterprise application development.
+
+The most important feature of the Spring Framework is dependency injection.
+The most important feature of the Spring Boot is Autoconfiguration. It automatically configures the classes based on the requirement.
+
+To run the Spring application, we need to set the server explicitly.
+Spring Boot provides embedded servers such as Tomcat and Jetty etc.
+
+Spring does not provide support for an in-memory database.
+But Spring Boot offers several plugins for working with an embedded and in-memory database such as H2.
+
+In Spring, developer has to define the dependencies manually in pom.xml file.
+But Spring Boot comes with the concept of starter in pom.xml file that internally takes care of downloading the dependencies JARs based on Spring Boot Requirement.
+
+
+How to Achive Enacpsulation
+===========================
+Declaring all the variables in the class as private and writing public methods in the class to set and get the values of variables.
+
+
+Shallow Copy Vs Deep copy
+=========================
+In shallow copy, only fields of primitive data type are copied while the objects references are not copied.
+Deep copy involves the copy of primitive data type as well as object references.
+
+
+@getmapping vs @requestmapping
+==============================
+
+
+What are the different options available to create application contexts for Spring
+==================================================================================
+ 1. AnnotationConfigApplicationContext. ...
+ 2. AnnotationConfigWebApplicationContext. ...
+ 3. XmlWebApplicationContext. ...
+ 4. FileSystemXMLApplicationContext. ...
+ 5. ClassPathXmlApplicationContext.
+
+
+
+@Required in Spring Boot
+========================
+@Required annotation applies to bean property setter methods and it checks whether that property has been set or not.
+
+If a field has been annotated with @Required annotation and that field is not set, you will get BeanInitializationException exception.
+
+
+@Required and @Autowired
+========================
+@Autowired annotation on a field, that field will be autowired with the bean having matching data type.
+@Required checks if a particular property has been set or not.
+
+
+
+
+ Custom Exception creation step
+ How to build rest API
+ How to Achive Enacpsulation
+
+ Externalization
+ ===============
+ Externalization in Java is used to customize the serialization mechanism.
+ If you want to serialize only part of an object, then Externalization is the best option. You will have to serialize only required fields of an object.
+
+ If you want to control the process of reading and writing the objects during serialization and de-serialization process, then we can use Externalization.
+
+ The methods, readExternal() and writeExternal() are defined by the Externalizable interface.
+
+
+ fail fast vs fail safe
+ ======================
+
+ Memory related features form java 7 to java8
+ ============================================
+
+     PermGen	                                   MetaSpace
+It is removed from java 8.	                It is introduced in Java 8.
+PermGen always has a fixed maximum size.	  Metaspace by default auto increases its size depending on the underlying OS.
+Contiguous Java Heap Memory.	              Native Memory(provided by underlying OS).
+Inefficient garbage collection.	            Efficient garbage collection.
+
+
+
+Query to get first and last row from the tables
+===============================================
+
+select *from Employee order by date_created asc fetch first 1 rows only
+union all
+select *from Employee order by date_created desc fetch first 1 rows only;
+
+
+CCC Stands for
+==============
+Certified Collateral Corporation
+
+
+Controller Syntax
+=================
+@Controller
+public class FileUploadController{
+
+  @RequestMapping(value = /doc/upload, method = RequestMethod.POST)
+  public void uploadFile(final @RequestParam("file") MultipartFile file, @RequestParam("fileName") fileName){
+
+  }
+
+}
+
+
+RestController Syntax
+=====================
+
+
+HashMap Internal follows
+========================
+HashMap uses Hashing technique while storing/retrieving objects.
+Hashing  is the process of converting an object into integer value which helps in indexing and faster search.
+
+HashMap uses an array and LinkedList data structure internally for storing key and value pairs.
+
+When we call the put() method, then it returns the hash value of the Key.
+After that HashMap calculates the index value of returned hash value by using index formula.
+
+index =  hashvalue &(n-1);
+Where n is the size of the array. HashMap internal size 16.
+
+That index value is used where this entry will be stored in HashMap.
+Based on the index value it stores the entry(node) in bucket, bucket can have more than 2 nodes and nodes can be connected using LinkedList data sructure.
+
+
+
+
+Hashing Collision
+-----------------
+Two unequal objects in Java can have the same hash code.
+In such case HashMap uses equals() method to check whether keys are equals or not.
+If Keys are same, It will replace the value with the current value.

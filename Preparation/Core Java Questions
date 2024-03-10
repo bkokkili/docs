@@ -1,0 +1,370 @@
+Make a class as immutable
+=========================
+1. Declare that class as final so it can't extend
+
+2. Make all the fields private so that direct access is not allowed
+
+3. Make all the mutable fields final so that it's value can be assigned only once.
+
+4. Don't provide setter methods for that variables.
+
+
+Why wait(), notify() and notifyAll() metods in Object class, why not in Thread class
+====================================================================================
+1. If we observe, these methods are used to provide a communication mechanism b/w threads in java and Object class is correct place to make them available to every obj.
+
+2. These methods are invoked in Synchronized Area only [otherwise we will get IllegalMonitorStateException] so, to execute  synchronized areas threads needs a object lock.
+
+
+final, finally and finalize()
+=============================
+final: final is keyword applicable to class, variables and methods.
+
+finally: finally is a block and it always associated with try and catch blocks.
+
+finalize() : finalize is a function from object class and it performs clean up activities on related objects before destruction.
+
+
+throw, throws and throwable
+===========================
+throw: is used to rise an exception intentionally as per the application requirement.
+
+throws: is used to bypass the generated exception from present method to caller method.
+
+throwable: is a super class for all types of exceptions and errors in java.
+
+
+What maven does
+===============
+1. It makes a project easy to build
+
+2. It provides uniform build process
+
+
+FileWriter Vs BufferedWriter Vs PrintWriter
+===========================================
+By using FileWriter and BufferedWriter we can write the character data to the file. But the diff is using FileWriter we can directly communicate with the file,
+in case of BufferedReader we can't communicate with the file directly, so we need one additional writer obj to communicate with the file.
+
+While writing a data to the file using FileWriter then we should insert a line seperator("/n") manually.
+
+By using PrintWriter we can write any type of data to the file and we can communicate to the file either directly or via some writer object also.
+
+
+
+Diff b/w include directive and include action tags
+==================================================
+Both are used to include a content of another resource in Present Jsp page. There are few noticeable diff among them,
+
+      1. Include directive includes the file at translation time means converting jsp into Servlet
+         Include action tag includes the file at run time.
+
+      2. In case of include directive destination must be jsp page only but include action tag destination
+         resource can be Html, Servlet and Jsp.
+
+      3. Using include action tag we can also pass a parameters to the included jsp page using param action
+         tag but in case of include directive we can't pass it.
+
+      4. Both Syntaxes are different
+
+           include directive  --- <%@ include file="file.jsp" %>
+           include action tag --- <jsp:include page="file.jsp">
+
+
+
+Filters and Usage
+=================
+
+Filter is an object that invoked at preprocessing and postProcessing of request.
+
+Filters are used for PreProcessing Of request and PostProcessing of response before they reach to target resource in the web application.
+
+
+What is transient
+=================
+
+transient is a java keyword, which is used to exclude the value of an object from serialization process
+and that value will not persist in database.
+
+
+Statement vs PreparedStatement
+==============================
+
+Both are used to execute SQL queries
+
+   1. Statement is used when SQL query is to be executed only once.
+
+      PreparedStatement is used when SQL query is to be executed multiple times.
+
+   2. Statement is used for executing static SQL statements and we can't pass parameters at runtime.
+
+      Prepared statement is used for executing dynamic SQL statements and we can pass parameters at runtime.
+
+   3. We can't use statement for read/write binary data.
+
+      Using PreparedStatement we can read/write binary data.
+
+
+Java 7 features
+===============
+
+ 1. Multi catch similar exception
+
+    Before:
+    -------
+           public void testMultiCatch(){
+
+     try {
+
+         throw new FileNotFoundException("FileNotFoundException");
+
+     } catch (FileNotFoundException fnfo) {
+
+         fnfo.printStackTrace();
+
+     } catch (IOException ioe) {
+
+         ioe.printStackTrace();
+   }
+
+
+   In jdk 1.7
+   ----------
+
+       public void testMultiCatch(){
+
+    try {
+
+        throw new FileNotFoundException("FileNotFoundException");
+
+      } catch (FileNotFoundException | IOException fnfo) {
+
+        fnfo.printStackTrace();
+      }
+    }
+
+ 2. Strings in switch
+
+ 3. Try with resource
+
+      Before:
+      -------
+      public void testTryWithResourcesStatement() throws FileNotFoundException, IOException{
+
+      FileInputStream in = null;
+      try {
+        in = new FileInputStream("java7.txt");
+        System.out.println(in.read());
+      } finally {
+          if (in != null) {
+            in.close();
+          }
+        }
+      }
+
+      In jdk 1.7:
+      -----------
+
+      public void testTryWithResourcesStatement() throws FileNotFoundException, IOException{
+
+      try (FileInputStream in = new FileInputStream("java7.txt")) {
+
+        System.out.println(in.read());
+       }
+      }
+
+  4. underscore b/w literals
+
+      int oneMillion_ = 1_000_000; //new
+
+      int oneMillion = 1000000;    // before
+
+
+Java 8 features:
+================
+
+1. Lambda Expressions
+----------------------
+   A lambda expression is an anonymous function. A function that doesn’t have a name and doesn’t belong to any class.
+
+   It is very useful in collection library, It helps to iterate, filter and extract data from collection.
+
+   Lambda expression is used to provide the implementation of functional interface.
+
+   syntax: (argument-list) -> {body}
+           Argument-list: It can be empty or non-empty as well.
+           Arrow-token: It is used to link arguments-list and body of expression.
+           Body: It contains expressions and statements for lambda expression.
+
+     Examples:
+       1. public void say(){System.out.println("Hello")}
+                         |
+                        () -> System.out.println("Hello")
+
+          Note: {} are not required if body contains only one line
+
+      2. public int add(int a){ return a;}
+                    |
+                  int a -> a
+
+          Note: () - are not mandatory for one argument.
+                () - are mandatory for zero arguments and  two and more arguments.
+
+
+      3. pubilc int add(int a, int b){( return a*b)}
+                    |
+                    (a,b) -> a*b
+
+         Note: No need to provide parameters type, complier will find automatically.
+
+                    (a,b) -> return a*b; ---- Not valid
+                    (a,b) -> {return a*b;} ---- Valid
+                    (a,b) -> {a*b;} ---- invalid
+
+        Note: Without curly braces we can't use return statements.
+              within curly braces if you want to return something then we should use return statement.
+
+2. Functional interface
+------------------------
+
+  An Interface that contains exactly one abstract method is known as functional interface.
+  It can have any number of default, static methods but can contain only one abstract method.
+  It can also declare methods of object class.
+
+  Functional Interface is also known as Single Abstract Method Interfaces or SAM Interfaces.
+
+  The main advantage of functional interface is we can pass a functional interface as an argument to another method
+  and provide an implementation for these interfaces using lambda expressions.
+
+3. Optional
+-----------
+Optional is a Java class which was introduced in JAVA 8, It is used to deal with NullPointerExpception in Java application.
+It provides methods which are used to check the presence of value for particular variable.
+
+
+4. forEach()
+------------
+Java introduced new method called forEach() in JAVA 8 to ietrate the elements.
+This method takes Single parameter which is functional interface. So, you can pass lambda expression as an argument.
+
+   ex: List<String> gamesList = new ArrayList<String>();
+        gamesList.add("Cricket");
+        gamesList.add("Foot Ball");
+        System.out.println("------------Iterating by passing lambda expression--------------");
+        gamesList.forEach(games -> System.out.println(games));
+
+
+5. Default methods
+------------------
+Java provides a facility to create default methods inside the interface.
+Methods which are defined inside the interface and tagged with default are known as default methods and these methods are non-abstract methods.
+
+   Ex:
+   interface Sayable{
+    // Default method
+    default void load(){
+    }
+    // Abstract method
+    void loadCharts(String msg);
+   }
+
+
+6. Static methods in interface
+------------------------------
+We can also define static methods inside the interface. Static methods are used to define utility methods.
+
+  Ex:
+    interface Sayable{
+     // default method
+     default void load(){
+     }
+    // Abstract method
+    void loadCharts(String msg);
+    // static method
+    static void loadAllCharts(String msg){
+    }
+  }
+
+7. Stream API
+-------------
+Java Streams is one of the feature in Java, introduced in JAVA 8
+We can use streams to filter, collect, print, and convert from one data structure to other etc.
+You can see that below code is optimized and maintained. Stream provides fast execution.
+
+  Ex:
+    List<Product> productsList = new ArrayList<Product>();
+		productsList.add(new Product(1, "HP Laptop", 25000f));
+		productsList.add(new Product(2, "Dell Laptop", 30000f));
+		productsList.add(new Product(3, "Lenevo Laptop", 38000f));
+		productsList.add(new Product(4, "Sony Laptop", 28000f));
+		productsList.add(new Product(5, "Apple Laptop", 90000f));
+
+    //Normal approach
+    List<Float> productPriceList2 = new ArrayList<Float>();
+    for (Product product : productsList) {
+      if (product.price > 30000) {
+        productPriceList2.add(product.price);
+      }
+    }
+
+		// using Streams
+		List<Float> productPriceList = productsList.stream()
+				                           .filter(p -> p.price >30000)// filtering data
+				                           .map(p -> p.price) // fetching price
+		                               .collect(Collectors.toList()); // collecting as list
+
+   // Sum the price using Streams
+    Double totalvalue = productsList.stream()
+          				        .filter(p -> p.price > 30000)
+          				        .collect(Collectors.summingDouble(p -> p.price));
+
+		System.out.println( "Normal approach: "+productPriceList2+ "Using Stream: "+productPriceList+ " Total Price: "+totalvalue);
+
+    output: Using Stream [38000.0, 90000.0] Normal approach [38000.0, 90000.0]
+
+
+8. Method References
+--------------------
+ Method reference is used to refer method of functional interface.
+
+   1. Reference to a static method.
+   2. Reference to an instance method.
+   3. Reference to a constructor.
+
+ The main benefit of the method reference or constructor reference is that they make the code even shorter by eliminating lambda expression, which makes the code more readable.
+
+
+
+Super() vs this()
+=================
+  super() as well as this() both are used to make constructor calls.
+  super() is used to call Base class's constructor(i.e, Parent's class) while this() is used to call current class's constructor.
+
+
+Local variable and Instance variable
+====================================
+
+	The main difference between instance variable and local variable is that instance variable is a variable that is declared in a class but outside a method,
+	while a local variable is a variable declared within a method or a constructor. Moreover, a variable is a memory location to store data in these programs.
+
+
+String Pool
+===========
+ String pool is nothing but a storage area in Java heap where string literals stores.
+ It is also known as String Intern Pool or String Constant Pool. It is just like object allocation.
+ By default, it is empty and privately maintained by the Java String class.
+
+
+Constructor chaining in Java
+============================
+ Constructor chaining is the process of calling one constructor from another constructor with respect to current object.
+ It can be done using this() keyword for constructors in same class.
+
+
+What is Thread
+==============
+A Thread is a very light-weighted process, that allows a program to operate more efficiently by running multiple tasks simultaneously.
+
+ Multithreading in Java
+ ======================
+ Multithreading in Java is a process of executing multiple threads simultaneously.

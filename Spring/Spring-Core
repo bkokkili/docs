@@ -1,0 +1,75 @@
+IOC vs IOC Container
+====================
+ IOC
+ ===
+  IOC(Inversion of Control) is an design principle, which describes about how the objects are being created meaning
+  how the objects are creating is explained by the IOC Design Principle.
+
+  IOC never Creates the Objects because its  just design principle.
+
+ IOC Container
+ =============
+ IOC Container is an object which is responsible for:
+  To instantiate the classes defined inside the application.
+  To configure the Object like its Scope and its Life Cycle Management.
+  To assemble the dependencies between the Objects using the DI concept.
+
+  We have two types of IOC container in Spring core module.
+    1. BeanFactory
+    2. ApplicationContext.
+
+
+ BeanFactory Vs ApplicationContext
+ =================================
+ Beanfactory Container will not create a bean object upto the request time. It means Beanfactory Container loads beans lazily.
+ While ApplicationContext Container creates objects for beans at the time of loading only. It means there is early loading.
+
+ BeanFactory Container doesn't support the feature of Autos scanning , but ApplicationContext Container supports.
+
+BeanFactory Container is basic container, it can only create objects and inject Dependencies. But we can not attach other services like security, transaction ,messaging etc.
+To provide all the services we have to use ApplicationContext Container.
+
+
+Dependency Injection
+====================
+
+Dependency Injection is the process of injecting the required dependencies into the target class.
+
+Spring IOC container will perform dependency injection in two ways,
+ 1. Setter Injection
+ 2. Constructor Injection
+
+ Setter injection
+ ----------------
+ In setter injection, if an Object depends on another object then the dependent object will be inject into target class through the setter methods.
+
+ Constructor Injection
+ ---------------------
+ IN Constructor injection, depend object will be inject into target class by calling the Constructor of an target class.
+
+
+ Setter Injection Vs Constructor Injection
+ -----------------------------------------
+  1. In case of Setter Injection, dependent object will be injected into target class after instantiating by calling the setter on target class object.
+
+     In Constructor Injection, dependent object will be injected into target class at the time of target class object creation.
+
+  2. In setter Injection, all the dependent objects are optional to be injected.
+
+     In Constructor Injection, all the dependent objects are mandatory to be injected into target class.
+     If you don't provide any of the dependent object then Spring IOC container will throw BeanCreation Exception.
+
+
+Spring security
+===============
+Spring Security is a framework which provides various security features like authentication, authorization to create secure Java Enterprise Applications.
+
+This framework mainly focus on major areas of application which are authentication and authorization.
+ --> Authentication is the process of knowing and identifying the user that wants to access.
+ --> Authorization is the process to allow authenticate users to perform actions in the application.
+
+
+What is Autowiring
+==================
+Autowiring is one of the feature in spring framework, it enables you to inject the object dependency implicitly.
+It internally uses setter or constructor injection.

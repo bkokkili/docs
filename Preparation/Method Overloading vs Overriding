@@ -1,0 +1,138 @@
+ Diff b/w MethodOverLoading and MethodOverriding:
+ ===============================================
+
+  1. The process of extending existing method functionality with new functionality is called method overloading
+
+     The process of replacing super class method functionality with sub class method functionality is called MethodOverriding.
+
+  2. In java app, we can perform methodOverLoading with or with out inheritance.
+
+     To perform method overriding we must require inheritance.
+
+  3. To perform method overloading, both the methods must have a diff method signature.
+
+     In method overriding both the methods must have a same method prototype.
+
+  4. Overloading happens at compile-time while Overriding happens at runtime
+
+ Example for MethodOverLoading:
+ =============================
+ public class Sum {
+
+    public int sum(int x, int y)
+    {
+        return (x + y);
+    }
+    public int sum(int x, int y, int z)
+    {
+        return (x + y + z);
+    }
+    public double sum(double x, double y)
+    {
+        return (x + y);
+    }
+    public static void main(String args[])
+    {
+        Sum s = new Sum();
+        System.out.println(s.sum(10, 20));
+        System.out.println(s.sum(10, 20, 30));
+        System.out.println(s.sum(10.5, 20.5));
+    }
+ }
+
+Example for MethodOverriding:
+============================
+class Parent {
+    void show()
+    {
+        System.out.println("Parent's show()");
+    }
+}
+class Child extends Parent {
+    @Override
+    void show()
+    {
+        System.out.println("Child's show()");
+    }
+}
+
+// Driver class
+class Main {
+    public static void main(String[] args)
+    {
+        // If a Parent type reference refers to a Parent object, then Parent's show is called
+        Parent obj1 = new Parent();
+        obj1.show();
+
+        // If a Parent type reference refers to a Child object Child's show() is called. This is called RUN TIME POLYMORPHISM.
+        Parent obj2 = new Child();
+        obj2.show();
+    }
+}
+
+
+Rules for method overriding:
+===========================
+
+1. Final methods can not be overridden
+
+    class Parent {
+      // Can't be overridden
+        final void show() {}
+    }
+   class Child extends Parent {
+      // This would produce error
+      void show() {}
+   }
+
+2. Private methods can not be overridden
+
+3.The overriding method must have same return type (or subtype)
+
+    From Java 5.0 onwards it is possible to have different return type for a overriding method in child class,
+    but child’s return type should be sub-type of parent’s return type.
+    This phenomena is known as covariant return type.
+
+    If the superclass method is protected, the subclass overridden method can have protected or public (but not default or private)
+    which means the subclass overridden method can not have a weaker access specifier.
+
+4. Static methods can not be overridden(Method Overriding vs Method Hiding):
+
+    When you define a static method in derived class with same signature as a static method in base class, it is known as method hiding.
+
+   class Parent {
+      static void m1(){
+         System.out.println("From parent "+ "static m1()");
+      }
+      void m2(){
+        System.out.println("From parent "+ "non-static(instance) m2()");
+      }
+   }
+
+  class Child extends Parent {
+    // This method hides m1() in Parent
+    static void m1(){
+     System.out.println("From child static m1()");
+    }
+    // This method overrides m2() in Parent
+    @Override
+    public void m2()
+    {
+      System.out.println("From child "+ "non-static(instance) m2()");
+    }
+  }
+
+class Main {
+ public static void main(String[] args)
+ {
+     Parent obj1 = new Child();
+
+     // As per overriding rules this should call to class Child static overridden method. Since static method can not be overridden,
+        it calls Parent's m1()
+
+     obj1.m1();
+
+     // Here overriding works and Child's m2() is called
+     obj1.m2();
+ }
+}

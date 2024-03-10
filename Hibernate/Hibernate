@@ -1,0 +1,265 @@
+ Advantages in Hibernate
+ =======================
+
+  Hibernate supports Inheritance, if we save the derived class object, then its base class object will also be stored into the database.
+
+	Hibernate supports relationships like One-To-One, One-To-Many, Many-To-One, and Many-To-Many.
+
+	Hibernate also supports collections like List, Set and Map.
+
+	Hibernate has capability to generate primary keys automatically while storing the records into database.
+
+	Hibernate has its own query language, i.e, hibernate query language which is database independent So if we change the database,
+  then also our application will works as HQL is database independent.
+
+	While inserting any record, if we don’t have any particular table in the database, JDBC will rises an error like “View not exist”, and throws exception,
+  but in case of hibernate, if it not found any table in the database this will create the table for us.
+
+	Hibernate provided Dialect classes, so we no need to write SQL queries in hibernate, instead we use the methods provided by that API.
+
+  Hibernate supports Caching mechanism, by using this caching technique application performance will be increased automatically.
+
+  Hibernate supports Annotations, apart from XML.
+
+	In JDBC all exceptions are checked exceptions, so we must write code in try, catch and throws, but in hibernate we only have Un-checked exceptions,
+  so no need to write try, catch, or no need to write throws.  Actually in hibernate we have the translator which converts checked to Un-checked.
+
+
+ Disadvantages in Hibernate
+ ==========================
+    I don’t think there are disadvantages in hibernate.
+
+    Hibernate is little slower than pure JDBC, actually the reason being hibernate used to generate many SQL statements in run time,
+    but I guess this is not the disadvantage.
+
+    But there is one major disadvantage, which was boilerplate code issue, actually we need to write same code in several files in the same application,
+    but spring eliminated this.
+
+
+ Dialect in Hibernate
+ ====================
+
+   Dialect is a java class, which contains code to map between java language data type and DB data type
+
+   Hibernate is a database independent. So, whatever database we will use in our application, we need to set a dialect related to that database.
+
+   For example, suppose we are using Oracle database, then we need a Oracle10gDialect.
+
+
+ return types of hibernate methods
+ =================================
+
+    save()      --- Serializable
+
+    persist()   --- void
+
+    get()       --- Object
+
+    Load()      --- Object
+
+    update()    --- void
+
+    merge()     --- Object
+
+
+ save() vs persist()
+ ===================
+
+  Both methods are used for saving object in the database.
+
+  save() returns the generated id and return type is serializable.
+  persist() return type is void.
+
+  If you try to save the detached object using save() then it will create new row in the table.
+  persist() will throw persistence exception for detached object.
+
+
+ get() vs load()
+ ===============
+
+  Both will be use for retrieving the object (a row) from the database.
+
+  load()
+  ------
+
+    When you call session.load() method, it will always return a “proxy” object.
+
+    Proxy means, hibernate will prepare some fake object with given identifier value in the memory without hitting the database,
+    for example if we call session.load(Student.class,new Integer(107)); then hibernate will create one fake Student object [row]
+    in the memory with id 107, but remaining properties of Student class will not even be initialized.
+
+    It will hit the database only when we try to retrieve the other properties of Student object I mean stdName, stdCountry.
+
+    If object [row] not found in the database it will throws ObjectNotFoundException.,
+
+  get()
+  -----
+
+    When you call session.get() method, it will hit the database immediately and returns the original object.
+
+    If the row is not available in the database, it returns null
+
+
+
+
+ What is cascade
+ ================
+
+  Cascade is a mandatory attribute, when we apply relationship b/w objects.
+
+  Cascade attribute transfers the operation on parent class to related child objects.
+
+  Suppose, if we write cascade="all" then changes at parent class object will be effected to child class object too.
+
+  For example, if we perform insert operation on parent class object, then child class obj also will be stored into the db.
+
+  Default value of cascade="none" means no operations will be transferred to child object.
+
+     Cascade having the values
+     -------------------------
+
+        1. none (default)
+
+        2. save
+
+        3. update
+
+        4. save-update
+
+        5. delete
+
+        6. all
+
+        7. all-delete-orphan
+
+    What is orphan record: orphan record is record in child table but it doesn't have a relationship with it's parent in the application.
+    ---------------------
+
+
+
+ Joins in Hibernate
+ ==================
+  Joins are used to select data from multiple tables by constructing single query, when there exist relationship.
+
+    Hibernate supports 4 types of Joins
+    -----------------------------------
+
+     Left Join  : Equal objects are selected from bot the sides of the join and more objects from left side are selected, even though no equal objects are there at right side.
+
+     Right Join : Equal objects are selected and more objects from right side even though no equal objects are existed at left side.
+
+     Inner Join :  only equal objects are selected from both the sides and the remaining's are discarded.
+
+     Full Join  : Both equal and non equal objects are selected from both the sides.
+
+
+  ID Generators in Hibernate
+  ==========================
+
+    Hibernate has capability to generating primary keys using Generator class while storing the records into database.
+
+       Hibernate provides multiple generator classes, Those are
+
+         1. assigned:
+         2. increment
+         3. sequence
+         4. identity
+         5. hilo
+         6. native
+         7. foreign
+         8. uuid.hex
+         9. uuid.string
+
+         In the above generators list, the first 7 are used for int, long, short types of primary keys, and last 2 are used when the primary key column type is String type.
+
+
+        assigned
+        --------
+          This generator supports in all the databases
+          This is the default generator class used by the hibernate, if we do not specify any generator then hibernate by default assumes it as “assigned”
+          If generator class is assigned, then the programmer is responsible for assigning the primary key value to object which is going to save into the database.
+
+        increment
+        ---------
+          This generator supports in all the databases, database independent.
+          This generator is used for generating the id value for the new record by using the formula Max of id value in Database + 1
+          If we manually assigned the value for primary key for an object, then hibernate doesn’t considers that value and uses max value of id in database + 1 concept only.
+          If there is no record initially in the database, then for the first time this will saves primary key value as 1.
+
+        sequence
+        --------
+          This generator class is database dependent it means, we cannot use this generator class for all the database,
+          we should know whether the database supports sequence or not before we are working with it. No support with SQL.
+
+          It uses the sequence of the database. if there is no sequence defined, it creates a sequence automatically.
+          e.g. in case of Oracle database, it creates a sequence named HIBERNATE_SEQUENCE.
+
+        identity
+        --------
+          This is database dependent, actually its not working in oracle
+          In this case (identity generator) the id value is generated by the database, but not by the hibernate, but in case of increment hibernate will take over this
+          This identity generator is similar to increment generator, but the difference was increment generator is database independent and
+          hibernate uses a select operation for selecting max of id before inserting new record.
+
+        hilo
+        ----
+          This generator is database independent. For the first record, the id value will be inserted as 1.
+          For the second record the id value will be inserted as 32768
+          For the next records the id value will be incremented by 32768 and will stores into the database.
+
+        native
+        ------
+        when we use this generator class, it first checks whether the database supports identity or not, if not checks for sequence and if not,
+        then hilo will be used finally the order will be..
+
+         identity
+         sequence
+         hilo
+
+        For example, if we are connecting with oracle, if we use generator class as native then it is equal to the generator class sequence.
+
+
+
+
+ What is inverse
+ ===============
+
+  In Hibernate, only the “relationship owner” should maintain the relationship, and the “inverse” keyword is used to defines
+  which side is the owner to maintain the relationship.
+
+  An inverse keyword has a boolean value true/false.
+
+  Default value of inverse keyword is inverse = "false", it means the parent class is responsible for saving/updating the child and it's relationship.
+
+  If inverse="true" then association subclass is responsible for saving/updating itself.
+
+       Ex:
+
+        In fact inverse =  owner of relation.  when inverse = true then relation owner = child otherwise parent.
+
+        By default inverse = false that means parent is relation owner.
+
+  The mappedBy attribute of @OneToMany  and @ManyToMany annotations behaves the same as inverse = true in the xml file.
+
+  mappedby vs joincolumn
+  ======================
+
+  @Joincolumn indicates that this entity is the owner of the relationship.
+  i.e, the corresponding table has a column with a foreign key to the referenced table.
+
+  mappedBy attribute indicates that the entity in this side is the inverse of the relationship,
+  and the owner resides in the "other" entity.
+
+    Ex:
+     @Entity
+     public class Company {
+     @OneToMany(mappedBy = "company",orphanRemoval = true,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+     private List<Branch> branches;
+     }
+
+     @Entity
+     public class Branch {
+     @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "companyId")
+     private Company company;
+     }

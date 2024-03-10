@@ -1,0 +1,231 @@
+Configure multiple data sources in Spring Boot
+==============================================
+
+1. Add Spring Boot JDBC dependency in POM.xml
+
+<!-- Spring boot jdbc dependency -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+
+<!-- MySql dependency -->
+<dependency>
+  <groupId>mysql</groupId>
+  <artifactId>mysql-connector-java</artifactId>
+</dependency>
+
+2. Add datasource information in application.properties file
+
+#first db
+spring.datasource.url = [url]
+spring.datasource.username = [username]
+spring.datasource.password = [password]
+spring.datasource.driverClassName = oracle.jdbc.OracleDriver
+
+#second db ...
+spring.secondDatasource.url = [url]
+spring.secondDatasource.username = [username]
+spring.secondDatasource.password = [password]
+spring.secondDatasource.driverClassName = oracle.jdbc.OracleDriver
+
+
+3. Get JDBCTemplate object in DAO class with @Autowired annotation and use it.
+
+   Spring Boot will automatically get the datasource details from application.propeties file and injects to jdbcTemplate object while auto wiring.
+
+   @Autowired
+   private JdbcTemplate jdbcTemplate;
+
+
+While configuring multiple datasources, one datasource instance must be marked as the primary data source.
+Else the application will fail to start-up because Spring will detect more than one data source of the same type.
+
+@Configuration
+public class SpringJava4sConfig {
+
+    @Bean
+    @Primary
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource firstDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.secondDatasource")
+    public DataSource secondDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplateOne(@Qualifier("firstDataSource") DataSource ds) {
+        return new JdbcTemplate(ds);
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplateTwo(@Qualifier("secondDataSource") DataSource ds) {
+        return new JdbcTemplate(ds);
+    }
+
+}
+
+
+
+
+Configure Tomcat external server in Spring boot
+===============================================
+
+ 1. In pom.xml, add dependency and packaging to war
+
+    <!-- Instruct spring boot not to use the inbuilt Tomcat server -->
+       <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-tomcat</artifactId>
+         <scope>provided</scope>
+       </dependency>
+
+    <!-- packaging to WAR -->
+    <packaging>war</packaging>
+
+
+ 2. Extend your main class with SpringBootServletInitializer and override its configure method
+
+   @SpringBootApplication
+   public class SpringBootApp extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+      return application.sources(SpringBootApp.class);
+    }
+
+    public static void main(String[] args) {
+      SpringApplication.run(SpringBootApp.class, args);
+    }
+   }
+
+ 3. Generate WAR and deploy into the external server.
+
+
+
+ Configure WebLogic server in Spring boot
+ ========================================
+
+ 1. In pom.xml, add dependency and packaging to war
+
+    <!-- Instruct spring boot not to use the inbuilt Tomcat server -->
+       <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-tomcat</artifactId>
+         <scope>provided</scope>
+       </dependency>
+
+    <!-- packaging to WAR -->
+    <packaging>war</packaging>
+
+
+ 2. Extend your main class with SpringBootServletInitializer and servlet initializer implements WebApplicationInitializer
+    then override its configure method.
+
+   @SpringBootApplication
+   public class SpringBootApp extends SpringBootServletInitializer implements  WebApplicationInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+      return application.sources(SpringBootApp.class);
+    }
+
+    public static void main(String[] args) {
+      SpringApplication.run(SpringBootApp.class, args);
+    }
+   }
+
+ 3. To avoid deployment issue which is java.lang.IllegalArgumentException for LoggerFactory we need to create weblogic.xml file
+    and need to add some configuration there
+
+    Exception: "java.lang.IllegalArgumentException: LoggerFactory is not a Logback LoggerContext but Logback is on the classpath".
+
+    weblogic.xml
+    ------------
+     <?xml version="1.0" encoding="UTF-8"?>
+        <wls:weblogic-web-app xmlns:wls="http://xmlns.oracle.com/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.4/weblogic-web-app.xsd">
+          <wls:context-root>email.migration</wls:context-root>
+            <wls:container-descriptor>
+               <wls:prefer-application-packages>
+                  <wls:package-name>org.slf4j</wls:package-name>
+                  <wls:package-name>org.apache.xmlbeans.*</wls:package-name>
+              </wls:prefer-application-packages>
+            </wls:container-descriptor>
+        </wls:weblogic-web-app>
+
+ 3. Generate WAR and deploy into the external server.
+
+
+
+ @SpringBootApplication in Spring boot
+ =====================================
+
+ This annotation is used to  denotes the main class (starting point) of an Spring Boot application.
+
+ This Annotation is a combination of:
+    1.@Configuration
+    2.@EnableAutoConfiguration
+    3.@ComponentScan
+
+    @SpringBootConfiguration
+    ------------------------
+    This is a Specialized @Configuration annotation that can be used to define one or more
+    --> non-spring classes
+    --> non-components(which may not participate in ComponentScan)
+
+    After the global release of the Spring Boot 1.4, the @Configuration annotation got replaced with the @SpringBootConfiguration annotation.
+
+
+    @EnableAutoConfiguration
+    ------------------------
+    This Annotation is the core annotation of the spring boot applications and it enables auto configuration which will detects all the beans including its dependencies.
+
+    @ComponentScan
+    --------------
+    This annotation is used to scan specific classes in Spring Boot which are annotated with any stereo type annotations.
+
+
+ Auto Configuration in Spring Boot
+ =================================
+
+ Auto configuration is the process of loading the classes based on some condition.
+
+ All the auto configuration classes are comes with spring boot but those classes are not loaded by default.
+
+ So, those classes will be enabled based on some conditions and some configurations needs to be provided.
+
+ This is called convention over configuration in Spring Boot.
+
+
+
+ Profile concept in Spring boot
+ ==============================
+
+ Environment specific configuration is called Profile, that means an Enterprise application have multiple environments like Dev, QA, PX and Prod.
+
+   Dev -->dev specific configurations (that means may be dev need to connect to mysql db) defined in some file which is application-dev.properties
+
+   qa--> qa specific configurations (that means may be qa need to connect to h2 db) defined in some file which is application-qa.properties.
+
+   The benefit of this profiles concept is activating the Environment specific configurations at run time.
+
+   Profiles are of two types:
+    1. build profiles
+    2. run time profiles.
+
+    Build profiles
+    --------------
+      Maven or Gradle are providing these build profiles.
+
+      In build profile suppose if we want to change the environment from 'Dev' to 'QA' then we have to build the code.
+
+      That means If we use the build profiles, when any environment change requires, then code build also required.
+
+
+
+      spring.profiles.active = dev
