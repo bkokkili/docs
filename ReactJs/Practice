@@ -12,3 +12,14 @@ Push an existing repository from the command line
 git remote add origin https://github.com/bkokkili/new.git
 git branch -M main
 git push -u origin main
+
+
+Extensions for ReactJs
+======================
+
+1. ES7 React/Redux/GraphQL/React-Native snippets
+2. Prettier - Code formatter
+3. Live Server
+4. Material Icon Theme
+
+
