@@ -1,0 +1,38 @@
+                                             Jai Sri Ram
+                                             ===========
+
+What is ReactJS
+===============
+
+React is a open source Java Script library which is used for building user interfaces (Web/Mobile).
+
+ReactJS is for Web and React Native is for Mobile applications.
+
+ReactJS existed in 2012, developed by facebook.
+
+What is the use of ReactJS
+==========================
+
+ReactJS is used for developing the Single page applications and PWA(Progressive Web applications)
+
+official website
+================
+https://react.dev/
+
+what is WebPack
+===============
+WebPack is a bundler, it combined all js/css files into one js/css file.
+
+What is Virtual DOM
+===================
+It's a copy of actual DOM, used to compare with actual DOM and it will do the modifications where ever it wants.
+
+what is Component in ReactJS
+============================
+Components are like functions that return HTML elements.
+
+--> Components are typically used to represent UI elements, such as buttons, inputs, and headers.
+--> Components are defined using the function or class keyword.
+--> When a component is rendered, it returns a JavaScript object that represents the UI element
+--> Components can also have state. State is mutable, which means that it can be changed by the component itself.
+    This makes it easy to create dynamic UIs.

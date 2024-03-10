@@ -1,0 +1,14 @@
+Commnads for git
+=========================
+--> git init
+--> git add . (will add all files into staging area of particular folder)
+--> git commit -m "commit message" (moved the files into local repository)
+--> git remote add origin https://github.com/bkokkili/new.git (linking to the repository where code has to be pushed)
+--> git push -u origin main
+
+
+Push an existing repository from the command line
+=================================================
+git remote add origin https://github.com/bkokkili/new.git
+git branch -M main
+git push -u origin main

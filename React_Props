@@ -1,0 +1,224 @@
+What are Props
+==============
+Props are a mechanism for passing data from a parent component to a child component.
+They allow you to customize and configure a component when you use it.
+Think of props as the parameters you pass to a function when you call it.
+
+Why Use Props
+=============
+Props are essential for building flexible and reusable components.
+They allow you to create a component template and use it with different data.
+ For example, you can create a "Person" component and use it to display information about different people by passing their details as props.
+
+Passing Props:
+==============
+To pass props to a component, you provide attributes on the component's JSX tag.
+These attributes are like named values that you want to send to the component.
+
+Here's an example of passing a prop named name to a Greeting component:
+// ParentComponent.js
+import React from 'react';
+import Greeting from './Greeting';
+
+function ParentComponent() {
+  return <Greeting name="Alice" />;
+}
+
+export default ParentComponent;
+
+Receiving Props:
+================
+In the receiving component (child component), you can access the props by using the parameter provided to the component function.
+
+Here's how you can receive and display the name prop in the Greeting component:
+
+// Greeting.js
+import React from 'react';
+
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+export default Greeting;
+
+
+Dynamic Props:
+==============
+Props can be dynamic, meaning you can pass different values to the same component in different instances.
+
+// ParentComponent.js
+import React from 'react';
+import Greeting from './Greeting';
+
+function ParentComponent() {
+  return (
+    <div>
+      <Greeting name="Alice" />
+      <Greeting name="Bob" />
+    </div>
+  );
+}
+
+export default ParentComponent;
+
+Children Props:
+===============
+Props can also include other JSX elements, allowing you to nest components inside each other.
+
+// ParentComponent.js
+import React from 'react';
+import Greeting from './Greeting';
+
+function ParentComponent() {
+  return (
+    <Greeting>
+      <p>This is the child component content.</p>
+    </Greeting>
+  );
+}
+
+export default ParentComponent;
+
+// Greeting.js
+import React from 'react';
+
+function Greeting(props) {
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {props.children}
+    </div>
+  );
+}
+
+export default Greeting;
+Default Props:
+You can provide default values for props using the defaultProps property.
+
+// Greeting.js
+import React from 'react';
+
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+Greeting.defaultProps = {
+  name: 'Guest',
+};
+
+export default Greeting;
+
+Summary
+=======
+Props allow you to pass data from parent to child components, making your components reusable and dynamic.
+You define props in the JSX of the parent component and access them using the props parameter in the child component.
+Props enable you to customize your components, and they play a crucial role in building flexible and modular React applications.
+
+In class components in React, props (short for properties) are a way to pass data from a parent component to a child component.
+Here's an explanation using class components along with an example:Class Component Example:
+Let's have a ParentComponent passing a message to a ChildComponent using props.Parent Component:
+
+Parent Component
+================
+// ParentComponent.js
+import React, { Component } from 'react';
+import ChildComponent from './ChildComponent';
+
+class ParentComponent extends Component {
+render() {
+// Message to be passed as a prop to the child
+const message = "Hello from Parent";
+
+return <ChildComponent message={message} />;
+}
+}
+
+export default ParentComponent;
+
+Child Component
+===============
+// ChildComponent.js
+import React, { Component } from 'react';
+
+class ChildComponent extends Component {
+render() {
+// Access the message prop passed by the parent
+const { message } = this.props;
+
+return <p>{message}</p>;
+}
+}
+
+export default ChildComponent;
+
+In this example:
+In the ParentComponent, the message variable is defined with the value "Hello from Parent."
+The ChildComponent is rendered with the message prop, which is then accessed in the child using this.props.message.
+The child component displays the message within a paragraph (<p>) tag.
+When the ParentComponent is rendered, it creates an instance of ChildComponent and passes the message as a prop. The child component then displays this message using this.props.message.
+Props allow you to pass data between components in a unidirectional flow, from parent to child. This mechanism helps in creating reusable and modular components in React applications.
+
+
+Prop drilling, also known as "threading" or "passing props down the component tree," refers to the process of passing
+props through multiple layers of nested components in React.
+It becomes relevant when a piece of state or a prop needs to be accessed by a deeply nested component.
+While it works, prop drilling may lead to cleaner code by using other state management solutions like
+Context API or state management libraries (e.g., Redux).
+
+Here's an example to illustrate prop drilling:Parent Component:
+
+// GrandParentComponent.js
+import React, { useState } from 'react';
+import ParentComponent from './ParentComponent';
+
+function GrandParentComponent() {
+const [grandparentState, setGrandparentState] = useState("State in Grandparent");
+
+return (
+<div>
+<p>Grandparent State: {grandparentState}</p>
+<ParentComponent grandparentState={grandparentState} />
+</div>
+);
+}
+
+export default GrandParentComponent;
+Intermediate Parent Component:
+jsxCopy code
+// ParentComponent.js
+import React from 'react';
+import ChildComponent from './ChildComponent';
+
+function ParentComponent({ grandparentState }) {
+return (
+<div>
+<p>Parent Component</p>
+<ChildComponent grandparentState={grandparentState} />
+</div>
+);
+}
+
+export default ParentComponent;
+Child Component:
+jsxCopy code
+// ChildComponent.js
+import React from 'react';
+
+function ChildComponent({ grandparentState }) {
+return (
+<div>
+<p>Child Component</p>
+<p>Accessing Grandparent State: {grandparentState}</p>
+</div>
+);
+}
+
+export default ChildComponent;
+
+In this example:
+GrandParentComponent has a piece of state (grandparentState) and passes it down to ParentComponent as a prop.
+ParentComponent receives the prop and passes it down to ChildComponent.
+ChildComponent finally accesses and uses the prop received from the grandparent.
+While this is a simple example, in larger applications with more nested components,
+prop drilling can become cumbersome and lead to code that is harder to maintain.
+In such cases, consider using the Context API or state management libraries for a more centralized state management approach.
