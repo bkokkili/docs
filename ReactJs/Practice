@@ -1,25 +1,80 @@
 Commnads for git
 =========================
 --> git init
---> git add . (will add all files into staging area of particular folder)
+--> git branch
+--> git status
+--> git add . (add all files into staging area of particular folder)
+--> git reset . (remove files from staging)
 --> git commit -m "commit message" (moved the files into local repository)
---> git remote add origin https://github.com/bkokkili/new.git (linking to the repository where code has to be pushed)
+--> git remote add origin https://github.com/bkokkili/docs.git (linking to the repository where code has to be pushed)
 --> git push -u origin main
-
 
 Push an existing repository from the command line
 =================================================
-git remote add origin https://github.com/bkokkili/new.git
+git remote add origin https://github.com/bkokkili/docs.git
 git branch -M main
 git push -u origin main
 
 
 Extensions for ReactJs
 ======================
-
 1. ES7 React/Redux/GraphQL/React-Native snippets
 2. Prettier - Code formatter
 3. Live Server
 4. Material Icon Theme
 
+
+NodeJs installation
+===================
+https://nodejs.org/en (select LTS version then download and install)
+
+after insatll, will get two things one is NodeJs and another one is npm.
+--> node -v (shows NodeJs version)
+--> npm -v (shows npm version)
+
+what is npm(Node Package Manager)
+=================================
+npm is the worlds largest software registry, conatins over 8,00,000 packages.
+
+npm init  --> (will create package.json file which contains meta data about application)
+
+nppm init -y  (will create package.json file with empty data)
+
+npm install package_name (will install specified package and it will be stored inside node_modules folder)
+
+npm install (npm will install all required dependencies which are mentioned in package.json file then we can see downloded packages in node_modules section)
+
+
+what is node_modules
+====================
+ All the packages which are installed using npm, those will be stored inside node_modules folder in react app
+
+what is .gitignore file
+=======================
+Whatever the files/folders which mentioned inside gitignore file those will be ignored while pushing changes into git.
+
+what is package.json file
+=========================
+package.json file contains meta data about application means what are the packages are used and their versions and etc.
+
+what is package-lock.json
+=========================
+It is same like package.json file but it contains detailed explanations about dependenceis like from where packages got downloaded and how it get integarted and etc.
+
+what is README.md file
+======================
+README.md is an instruction manual to how to do your project.
+
+What is the use of npx(node package execution)
+==============================================
+npx is used to exceute the package without installing it.
+  
+  npx create-react-app applicationName
+
+using npm, we have to install the package first then have to create application
+ npm install create-react-app 
+ create-react-app applicationName
+
+ To run react appplication use npm start.
+ 
 
