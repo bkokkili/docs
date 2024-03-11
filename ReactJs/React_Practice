@@ -10,22 +10,22 @@ ReactJS is for Web and React Native is for Mobile applications.
 
 ReactJS existed in 2012, developed by facebook.
 
+official website
+================
+https://react.dev/
+
 What is the use of ReactJS
 ==========================
 
 ReactJS is used for developing the Single page applications and PWA(Progressive Web applications)
 
-official website
-================
-https://react.dev/
-
-what is WebPack
-===============
-WebPack is a bundler, it combined all js/css files into one js/css file.
-
-What is Virtual DOM
+Advantages of React
 ===================
-It's a copy of actual DOM, used to compare with actual DOM and it will do the modifications where ever it wants.
+1. SPA's[Single page Applications]
+2. Components 
+3. Jsx [Js xml] (we can write html code inside js file)
+4. one way data binding
+5. 
 
 what is Component in ReactJS
 ============================
@@ -36,3 +36,53 @@ Components are like functions that return HTML elements.
 --> When a component is rendered, it returns a JavaScript object that represents the UI element
 --> Components can also have state. State is mutable, which means that it can be changed by the component itself.
     This makes it easy to create dynamic UIs.
+
+what is one way data binding in React
+=====================================
+React uses one way data binding means if the data modifide at one place then it may show the reflection in another place but
+another place modified then it will not show the reflection here.
+
+[Angular uses two way data binding means if the data modifide at one place then change will reflect in another place
+and if data modified at another place then change will reflect here also]
+
+
+React App folder Struture
+=========================
+1. node_modules folder
+2. .gitignore file
+3. package.json file
+4. package-lock.json file
+5. README file
+6. .eslintrc file
+
+what is node_modules
+====================
+ All the packages which are installed using npm, those will be stored inside node_modules folder in react app
+
+what is .gitignore file
+=======================
+Whatever the files/folders which are mentioned inside gitignore file those will be ignored while pushing changes into git.
+
+what is package.json file
+=========================
+package.json file contains meta data about application means what are the packages are used and their versions and etc.
+
+what is package-lock.json
+=========================
+It is same like package.json file but it contains detailed explanations about dependenceis like from where packages got downloaded and how it get integarted and etc.
+
+what is README.md file
+======================
+README.md is an instruction manual to how to do your project.
+
+what is .eslintrc file
+======================
+This file is used for testing purpose.
+Whenever your code has an erros then this file will tell you about errors.
+
+Ways to create React app
+========================
+1. npm install create-react-app
+   create-react-app appname
+2. npx create-react-app appname
+3. npm create vite@latest

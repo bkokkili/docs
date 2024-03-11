@@ -26,7 +26,7 @@ Extensions for ReactJs
 
 NodeJs installation
 ===================
-https://nodejs.org/en (select LTS version then download and install)
+https://nodejs.org/en (select LTS (Long Term Support) version then download and install)
 
 after insatll, will get two things one is NodeJs and another one is npm.
 --> node -v (shows NodeJs version)
@@ -44,30 +44,11 @@ npm install package_name (will install specified package and it will be stored i
 
 npm install (npm will install all required dependencies which are mentioned in package.json file then we can see downloded packages in node_modules section)
 
-
-what is node_modules
-====================
- All the packages which are installed using npm, those will be stored inside node_modules folder in react app
-
-what is .gitignore file
-=======================
-Whatever the files/folders which mentioned inside gitignore file those will be ignored while pushing changes into git.
-
-what is package.json file
-=========================
-package.json file contains meta data about application means what are the packages are used and their versions and etc.
-
-what is package-lock.json
-=========================
-It is same like package.json file but it contains detailed explanations about dependenceis like from where packages got downloaded and how it get integarted and etc.
-
-what is README.md file
-======================
-README.md is an instruction manual to how to do your project.
+npm alternative is yarn.
 
 What is the use of npx(node package execution)
 ==============================================
-npx is used to exceute the package without installing it.
+npx is used for executing Node. js packages without installing them.
   
   npx create-react-app applicationName
 
@@ -76,5 +57,22 @@ using npm, we have to install the package first then have to create application
  create-react-app applicationName
 
  To run react appplication use npm start.
+
+ what is WebPack
+===============
+WebPack is a bundler, it combined all js/css files into single js/css file which is understandable by the browser.
+
+What is Virtual DOM
+===================
+It's a copy of actual DOM, used to compare with actual DOM and it will do the modifications where ever it wants.
+
+what is the purpose of .min of js /css file
+===========================================
+.min means minifide versions of js/css file where whole code will be in a single line, So people can't able to read it.
+
+
+
+
+
  
 
