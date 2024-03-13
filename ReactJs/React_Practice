@@ -1,6 +1,5 @@
                                              Jai Sri Ram
                                              ===========
-
 What is ReactJS
 ===============
 
@@ -19,23 +18,29 @@ What is the use of ReactJS
 
 ReactJS is used for developing the Single page applications and PWA(Progressive Web applications)
 
-Advantages of React
-===================
+Advantages/Featuers of React
+============================
 1. SPA's[Single page Applications]
 2. Components 
 3. Jsx [Js xml] (we can write html code inside js file)
 4. one way data binding
-5. 
+5. Virtual Dom
 
 what is Component in ReactJS
 ============================
-Components are like functions that return HTML elements.
+Components are like a functions that return HTML elements.
 
 --> Components are typically used to represent UI elements, such as buttons, inputs, and headers.
 --> Components are defined using the function or class keyword.
 --> When a component is rendered, it returns a JavaScript object that represents the UI element
 --> Components can also have state. State is mutable, which means that it can be changed by the component itself.
     This makes it easy to create dynamic UIs.
+
+JavaScript XML
+==============
+In react, we can write html inside javascript called as JSX syntax
+ --> In JSX, always one block will be
+ --> In JSX, to use JS use set brackets {} 
 
 what is one way data binding in React
 =====================================
@@ -44,6 +49,11 @@ another place modified then it will not show the reflection here.
 
 [Angular uses two way data binding means if the data modifide at one place then change will reflect in another place
 and if data modified at another place then change will reflect here also]
+
+What is Virtual DOM in React
+============================
+React will create a Virtual DOM, it is a copy of an actual DOM.
+React will compare Virtual DOM with Actual DOM then will render the component where ever the changes happend.
 
 
 React App folder Struture
