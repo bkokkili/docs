@@ -1,0 +1,21 @@
+
+Reat States
+===========
+React State is a JavaScript Object that stores data specific to Component.
+The data in state object can change over a time, and when it does, React will re-render the 
+component with updated data.
+
+In React, a State object can be updated using setState() method.
+
+setState() method takes a single parameter and expects an object which should contain the set of values to be updated.
+
+Once the update is done then that method implicitly calls the render() method to reload the component.
+
+Example
+=======
+ const [count, setCount] = useState(0);
+ here defualt value of count is 0
+ useState() will have two things, one is vlaue(count) and another one is function(setCount) which is used to update the value.
+
+ Class Components by default have state Object.
+ Functional components from  16.2 versions acheive state using by hook "useState".

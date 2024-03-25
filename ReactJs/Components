@@ -2,8 +2,13 @@
 React Components
 ================
 
+Components are building blocks of react.
+
 In react, we have two types of componenst.
 One is functional components and other one is class components.
 Till react 16, we used to have an class components - class components have a state and functional components don't.
 React 16 brings hooks so using them we can bring state to functional components also.
+
+
+Class Components by default have state Object.
 
