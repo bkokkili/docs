@@ -5,7 +5,7 @@ What is ReactJS
 
 React is a open source Java Script library which is used for building user interfaces (Web/Mobile).
 
-ReactJS is for Web and React Native is for Mobile applications.
+ReactJS is for Web and ReactNative is for Mobile applications.
 
 ReactJS existed in 2012, developed by facebook.
 
@@ -28,7 +28,7 @@ Advantages/Featuers of React
 
 what is Component in ReactJS
 ============================
-Components are like a functions that return HTML elements.
+Component is like a function that returns HTML elements.
 
 --> Components are typically used to represent UI elements, such as buttons, inputs, and headers.
 --> Components are defined using the function or class keyword.
@@ -36,11 +36,42 @@ Components are like a functions that return HTML elements.
 --> Components can also have state. State is mutable, which means that it can be changed by the component itself.
     This makes it easy to create dynamic UIs.
 
+--> If one Component B inside another component A, then A is the Parent component and B is the child compoenet of A.
+
+--> Component name must starts with Uppercase and inside return only one block element should mention.
+
+--> <></>, these are called fragemnts used to wrap up code without any impact of styling.
+
 JavaScript XML
 ==============
 In react, we can write html inside javascript called as JSX syntax
- --> In JSX, always one block will be
- --> In JSX, to use JS use set brackets {} 
+
+Syntax:
+-------
+const MyComponent = () => {
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+      <p>This is a React component.</p>
+    </div>
+  );
+};
+
+---> JSX is a powerful tool that can make it easier to write React components. However, it is not required to use JSX in React. 
+
+You can also write React components using plain JavaScript.
+
+Syntax
+------
+const MyComponent = () => {
+  return React.createElement('div', null, [
+    React.createElement('h1', null, 'Hello, world!'),
+    React.createElement('p', null, 'This is a React component.'),
+  ]);
+};
+
+ --> With JSX you can write expressions inside curly braces { }.
+     syntax: const jsxElement = <h1>React is {5 + 5} times better with JSX</h1>; 
 
 what is one way data binding in React
 =====================================
@@ -96,3 +127,7 @@ Ways to create React app
    create-react-app appname
 2. npx create-react-app appname
 3. npm create vite@latest
+
+what is PropTypes in React
+===========================
+PropTypes are used to check the which types of properties are coming from parent component.

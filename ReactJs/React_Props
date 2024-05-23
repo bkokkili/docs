@@ -1,5 +1,6 @@
 What are Props
 ==============
+props means properties.
 Props are a mechanism for passing data from a parent component to a child component.
 They allow you to customize and configure a component when you use it.
 Think of props as the parameters you pass to a function when you call it.
@@ -14,6 +15,11 @@ Passing Props:
 ==============
 To pass props to a component, you provide attributes on the component's JSX tag.
 These attributes are like named values that you want to send to the component.
+
+<Child prop="value"/> //static prop
+<Child prop={value}/> //Dynamic prop
+<Child fun={fun} /> //function prop
+
 
 Here's an example of passing a prop named name to a Greeting component:
 // ParentComponent.js

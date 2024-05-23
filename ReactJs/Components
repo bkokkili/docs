@@ -12,3 +12,13 @@ React 16 brings hooks so using them we can bring state to functional components 
 
 Class Components by default have state Object.
 
+Class Component Life Cycle Methods
+============================
+There are some default methods which will be triggered in different stages of component life cycle, those are called as
+Life Cycle Methods.
+
+initialize ==>
+    Mounting (started and rendered in DOM) ==>
+      updating (re render) ==> 
+         unmounting (it is removed from DOM)
+
